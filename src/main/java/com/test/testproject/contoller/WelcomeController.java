@@ -1,17 +1,17 @@
 package com.test.testproject.contoller;
 
+import com.test.testproject.dto.StudentDto;
 import com.test.testproject.models.Student;
 import com.test.testproject.services.StdudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/hr-api/v1")
 public class WelcomeController {
 
     @Autowired
@@ -42,7 +42,24 @@ public class WelcomeController {
     @GetMapping("/studentbyid/{id}")
     public Student getStudetById(@PathVariable int id)
     {
-        ///System.out.print("Samik");
+
         return  _stdudentService.GetStudentById(id);
     }
+
+    @PostMapping("/addStudent")
+    public List<Student> addStudent(@RequestBody Student std)
+    {
+        ///System.out.print("Samik");
+        return  _stdudentService.AddStudent(std);
+    }
+
+    @PutMapping("/updatestudent")
+    public Student updateStudent(@RequestBody Student updatedStd)
+    {
+         return _stdudentService.UpdatedStudent(updatedStd);
+    }
+
+
+
+
 }
