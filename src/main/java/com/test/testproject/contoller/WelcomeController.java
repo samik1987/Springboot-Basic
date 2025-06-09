@@ -4,6 +4,8 @@ import com.test.testproject.dto.StudentDto;
 import com.test.testproject.models.Student;
 import com.test.testproject.services.StdudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,9 +56,16 @@ public class WelcomeController {
     }
 
     @PutMapping("/updatestudent")
-    public Student updateStudent(@RequestBody Student updatedStd)
-    {
-         return _stdudentService.UpdatedStudent(updatedStd);
+    public ResponseEntity<?> updateStudent(@RequestBody Student updatedStd) throws Exception {
+
+        try {
+             return new ResponseEntity<>(_stdudentService.UpdatedStudent(updatedStd), HttpStatus.OK) ;
+         }
+         catch (Exception ex)
+         {
+             return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+             //throw  new Exception("Data Not present");
+         }
     }
 
 

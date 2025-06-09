@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StdudentService {
@@ -25,8 +26,10 @@ public class StdudentService {
     public Student GetStudentById(int _stdId)
     {
 
-        return  _studentRepository.Studentdata().stream()
-                .filter(std -> std.stdId == _stdId).findAny().get();
+        Optional<Student>  sercStd =_studentRepository.Studentdata().stream()
+                .filter(std -> std.stdId == _stdId).findAny();
+
+        return  sercStd.orElse(new Student());
 
     }
 
@@ -35,7 +38,14 @@ public class StdudentService {
         StudentDto stdDto = new StudentDto();
 
         Student std1 = _studentRepository.Studentdata().stream()
-                .filter(std -> std.stdId == _stdId).findAny().get();
+                .filter(std -> {
+
+                    if(std.stdId == _stdId)
+                        return true;
+                    else
+                        return false;
+                })
+                .findAny().get();
 
         if(std1.totalMarks > 75)
         {
@@ -61,14 +71,32 @@ public class StdudentService {
 
     }
 
-    public Student UpdatedStudent(Student updatedStd)
-    {
-        Student existingStd = _studentRepository.Studentdata().stream()
-                .filter(std -> std.stdId == updatedStd.stdId).findAny().get();
+    public Student UpdatedStudent(Student updatedStd) throws Exception {
 
-        existingStd.totalMarks = updatedStd.totalMarks;
+        return  _studentRepository.Studentdata().stream()
+                .filter(std -> std.stdId == updatedStd.stdId)
+                .map(stud -> {
+                    return   new Student(stud.stdId, stud.stdRoll, stud.stdName, stud.stdClass, (stud.totalMarks = updatedStd.totalMarks));
+                })
+                .findAny()
+                //.orElse(null);
+                .orElseThrow( ()-> new Exception("Data Not present"));
 
-        return  existingStd;
+//        Optional<Student> existingStd = _studentRepository.Studentdata().stream()
+//                .filter(std -> std.stdId == updatedStd.stdId).findAny();
+
+//        if(existingStd.isPresent()) {
+//
+//            existingStd.get().totalMarks = updatedStd.totalMarks;
+//            return  existingStd.get();
+//
+//        }
+//        else
+//        {
+//            return null;
+//        }
+
+
 
     }
 }
