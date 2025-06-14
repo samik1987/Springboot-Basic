@@ -7,8 +7,11 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StdudentService {
@@ -20,6 +23,21 @@ public class StdudentService {
     {
         //StudentRepository _studentRepository = new StudentRepository();
         return  _studentRepository.Studentdata();
+
+    }
+
+    public   Map<String, Long> GetAllStudentByGrouping()
+    {
+        //StudentRepository _studentRepository = new StudentRepository();
+        List<Student> stdList =  _studentRepository.Studentdata();
+        List<StudentDto> stdDtoList = new ArrayList<>();
+
+        Map<String, Long> stdgroup =  stdList.stream()
+                .map(std ->{
+                   return new StudentDto(std.stdId,std.stdRoll,std.stdName,std.stdClass,std.totalMarks> 75 ? "pass" : "fail");
+                }).collect(Collectors.groupingBy(st-> st.IsStudentPass, Collectors.counting()));
+
+        return  stdgroup;
 
     }
 

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/hr-api/v1")
@@ -34,19 +35,29 @@ public class WelcomeController {
         return  "Welcome to My World...";
     }
 
-    @GetMapping("/allstdent")
-    public List<Student> getAllStdenta()
+    @GetMapping("/allstudent")
+    public List<Student> getAllStdent()
     {
         ///System.out.print("Samik");
         return  _stdudentService.GetAllStudent();
     }
 
+    @GetMapping("/allstudentbygroup")
+    public Map<String, Long> getAllStdentsByNumberGrouping()
+    {
+        ///System.out.print("Samik");
+        return  _stdudentService.GetAllStudentByGrouping();
+    }
+
     @GetMapping("/studentbyid/{id}")
-    public Student getStudetById(@PathVariable int id)
+    public Student getStudetById(@PathVariable int id ,@RequestParam String name)
     {
 
+        System.out.println("Student name =" + name);
         return  _stdudentService.GetStudentById(id);
     }
+
+
 
     @PostMapping("/addStudent")
     public List<Student> addStudent(@RequestBody Student std)
@@ -55,10 +66,11 @@ public class WelcomeController {
         return  _stdudentService.AddStudent(std);
     }
 
-    @PutMapping("/updatestudent")
-    public ResponseEntity<?> updateStudent(@RequestBody Student updatedStd) throws Exception {
+    @PutMapping("/updatestudent/{stdId}")
+    public ResponseEntity<?> updateStudent(@RequestBody Student updatedStd,@PathVariable int stdId) throws Exception {
 
-        try {
+         try {
+             System.out.print(".....updatestudent.....");
              return new ResponseEntity<>(_stdudentService.UpdatedStudent(updatedStd), HttpStatus.OK) ;
          }
          catch (Exception ex)
@@ -67,7 +79,6 @@ public class WelcomeController {
              //throw  new Exception("Data Not present");
          }
     }
-
 
 
 
