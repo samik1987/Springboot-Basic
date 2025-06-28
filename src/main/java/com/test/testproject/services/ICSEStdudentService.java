@@ -3,10 +3,7 @@ package com.test.testproject.services;
 import com.test.testproject.dto.StudentDto;
 import com.test.testproject.models.Student;
 import com.test.testproject.repository.StudentRepository;
-import com.test.testproject.utility.CBSEPassFailUtility;
-import com.test.testproject.utility.ICSEPassFailUtility;
 import com.test.testproject.utility.IUtility;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,18 +15,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class StdudentService {
+public class ICSEStdudentService {
 
     @Autowired
     public StudentRepository _studentRepository;
 
-//    @Autowired
-//    @Qualifier("CBSE-Utility")
-//    private  IUtility _utility;
 
     private final IUtility _utilityObj;
 
-    public StdudentService(@Qualifier("CBSE-Utility") IUtility utilityObj) {
+    public ICSEStdudentService(@Qualifier("ICSE-Utility") IUtility utilityObj) {
         this._utilityObj = utilityObj;
     }
 

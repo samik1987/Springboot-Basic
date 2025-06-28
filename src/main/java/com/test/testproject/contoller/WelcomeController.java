@@ -49,6 +49,15 @@ public class WelcomeController {
         return  _stdudentService.GetAllStudentByGrouping();
     }
 
+    @GetMapping("/passnfail/{stdId}")
+    public StudentDto GetStudentForPassNFail(@PathVariable int stdId)
+    {
+        ///System.out.print("Samik");
+        return  _stdudentService.GetStudentForPassNFail(stdId);
+    }
+
+
+
     @GetMapping("/studentbyid/{id}")
     public Student getStudetById(@PathVariable int id ,@RequestParam String name)
     {
