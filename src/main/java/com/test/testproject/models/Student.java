@@ -1,8 +1,12 @@
 package com.test.testproject.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+@Entity
 public class Student {
 
+    @Id
     public  int stdId;
     public  int stdRoll;
     public  String stdName;

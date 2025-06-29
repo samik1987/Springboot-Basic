@@ -2,6 +2,7 @@ package com.test.testproject.services;
 
 import com.test.testproject.dto.StudentDto;
 import com.test.testproject.models.Student;
+import com.test.testproject.repository.StudentH2Repo;
 import com.test.testproject.repository.StudentRepository;
 import com.test.testproject.utility.IUtility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class ICSEStdudentService {
 
     @Autowired
     public StudentRepository _studentRepository;
+
+    @Autowired
+    public StudentH2Repo _stdH2;
 
 
     private final IUtility _utilityObj;
@@ -88,10 +92,12 @@ public class ICSEStdudentService {
 
     public List<Student> AddStudent(Student std)
     {
-        List<Student> existingStdList =  _studentRepository.Studentdata();
-        existingStdList.add(std);
+//        List<Student> existingStdList =  _studentRepository.Studentdata();
+//        existingStdList.add(std);
 
-        return  existingStdList;
+        _stdH2.save(std);
+
+        return  _stdH2.findAll();
 
     }
 

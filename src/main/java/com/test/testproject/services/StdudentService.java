@@ -2,6 +2,7 @@ package com.test.testproject.services;
 
 import com.test.testproject.dto.StudentDto;
 import com.test.testproject.models.Student;
+import com.test.testproject.repository.StudentH2Repo;
 import com.test.testproject.repository.StudentRepository;
 import com.test.testproject.utility.CBSEPassFailUtility;
 import com.test.testproject.utility.ICSEPassFailUtility;
@@ -23,6 +24,9 @@ public class StdudentService {
     @Autowired
     public StudentRepository _studentRepository;
 
+    @Autowired
+    public StudentH2Repo _stdH2;
+
 //    @Autowired
 //    @Qualifier("CBSE-Utility")
 //    private  IUtility _utility;
@@ -36,7 +40,8 @@ public class StdudentService {
     public List<Student> GetAllStudent()
     {
         //StudentRepository _studentRepository = new StudentRepository();
-        return  _studentRepository.Studentdata();
+       // return  _studentRepository.Studentdata();
+        return _stdH2.findAll();
 
     }
 
@@ -58,10 +63,12 @@ public class StdudentService {
     public Student GetStudentById(int _stdId)
     {
 
-        Optional<Student>  sercStd =_studentRepository.Studentdata().stream()
-                .filter(std -> std.stdId == _stdId).findAny();
+//        Optional<Student>  sercStd =_studentRepository.Studentdata().stream()
+//                .filter(std -> std.stdId == _stdId).findAny();
+//
+//        return  sercStd.orElse(new Student());
 
-        return  sercStd.orElse(new Student());
+        return _stdH2.findById(_stdId).orElse(new Student());
 
     }
 
@@ -94,10 +101,12 @@ public class StdudentService {
 
     public List<Student> AddStudent(Student std)
     {
-        List<Student> existingStdList =  _studentRepository.Studentdata();
-        existingStdList.add(std);
+//        List<Student> existingStdList =  _studentRepository.Studentdata();
+//        existingStdList.add(std);
 
-        return  existingStdList;
+        _stdH2.save(std);
+
+        return  _stdH2.findAll();
 
     }
 

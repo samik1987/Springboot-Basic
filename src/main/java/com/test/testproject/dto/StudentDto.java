@@ -4,10 +4,10 @@ package com.test.testproject.dto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
-@Entity
+
 public class StudentDto {
 
-    @Id
+
     public  int stdId;
     public  int stdRoll;
     public  String stdName;
