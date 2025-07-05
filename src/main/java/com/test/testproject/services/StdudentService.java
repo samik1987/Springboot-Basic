@@ -72,6 +72,16 @@ public class StdudentService {
 
     }
 
+    public Student GetStudentByName(String _stdName)
+    {
+        return _stdH2.findByStdName(_stdName).orElse(new Student());
+    }
+
+    public Student GetStudentByNameContain(String _filterText)
+    {
+        return _stdH2.findByStdNameContaining(_filterText).orElse(new Student());
+    }
+
     public StudentDto GetStudentForPassNFail(int _stdId)
     {
         StudentDto stdDto = new StudentDto();
@@ -105,6 +115,27 @@ public class StdudentService {
 //        existingStdList.add(std);
 
         _stdH2.save(std);
+
+        return  _stdH2.findAll();
+
+    }
+
+
+    public List<Student> deleteById(int stdId)
+    {
+
+        _stdH2.deleteById(stdId);
+
+        return  _stdH2.findAll();
+
+    }
+
+    public List<Student> AddAllStudent(List<Student> stdList)
+    {
+//        List<Student> existingStdList =  _studentRepository.Studentdata();
+//        existingStdList.add(std);
+
+        _stdH2.saveAll(stdList);
 
         return  _stdH2.findAll();
 

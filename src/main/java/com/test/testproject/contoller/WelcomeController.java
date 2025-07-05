@@ -3,6 +3,8 @@ package com.test.testproject.contoller;
 import com.test.testproject.dto.StudentDto;
 import com.test.testproject.models.Student;
 import com.test.testproject.services.StdudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/hr-api/v1")
 public class WelcomeController {
+
+    private static final Logger logger = LoggerFactory.getLogger(WelcomeController.class);
 
     @Autowired
     private StdudentService _stdudentService;
@@ -32,6 +36,8 @@ public class WelcomeController {
     public String Welcome()
     {
         System.out.print("Samik");
+
+        logger.info("Looging from Samik's application");
         return  "Welcome to My World...";
     }
 
@@ -59,11 +65,29 @@ public class WelcomeController {
 
 
     @GetMapping("/studentbyid/{id}")
-    public Student getStudetById(@PathVariable int id ,@RequestParam String name)
+    public Student getStudetById(@PathVariable int id ,@RequestParam(defaultValue = "Testname") String name)
     {
 
         System.out.println("Student name =" + name);
         return  _stdudentService.GetStudentById(id);
+    }
+
+    @GetMapping("/studentbyname/{name}")
+    public Student getStudetByname(@PathVariable String name)
+    {
+        return  _stdudentService.GetStudentByName(name);
+    }
+
+    @GetMapping("/stdbynamecontain/{name}")
+    public Student getStudetBynameContain(@PathVariable String name)
+    {
+        return  _stdudentService.GetStudentByNameContain(name);
+    }
+
+    @GetMapping("/deletestudent/{id}")
+    public List<Student> getStudetBynameContain(@PathVariable int id)
+    {
+        return  _stdudentService.deleteById(id);
     }
 
 
@@ -73,6 +97,13 @@ public class WelcomeController {
     {
         ///System.out.print("Samik");
         return  _stdudentService.AddStudent(std);
+    }
+
+    @PostMapping("/addAllStudent")
+    public List<Student> addAllStudent(@RequestBody List<Student> studentList)
+    {
+        ///System.out.print("Samik");
+        return  _stdudentService.AddAllStudent(studentList);
     }
 
     @PutMapping("/updatestudent/{stdId}")

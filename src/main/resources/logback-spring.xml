@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/myapp.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/myapp-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Console Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- Enable your application logs -->
+    <logger name="com.test.testproject" level="DEBUG" />
+
+    <!-- Hibernate is set to WARN or INFO -->
+    <logger name="org.hibernate" level="WARN" />
+
+    <!-- Set root logger -->
+    <root level="ERROR">
+        <appender-ref ref="CONSOLE" />
+    </root>
+<!--    <root level="DEBUG">-->
+<!--        <appender-ref ref="FILE" />-->
+<!--    </root>-->
+</configuration>
