@@ -1,16 +1,26 @@
 package com.test.testproject.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "StudentDetails")
 public class Student {
 
     @Id
+    @Column(nullable = false, unique = true)
     public  int stdId;
     public  int stdRoll;
+    @NotBlank(message = "student name is mandatory")
+    @Column(nullable = false, unique = true)
     public  String stdName;
     public  String stdClass;
+
+    @Max(value = 100, message = "marks cannot exceed 100")
     public  int totalMarks;
 
     public Student(int stdId, int stdRoll, String stdName, String stdClass) {

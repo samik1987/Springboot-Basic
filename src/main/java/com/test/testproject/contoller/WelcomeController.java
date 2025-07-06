@@ -3,6 +3,7 @@ package com.test.testproject.contoller;
 import com.test.testproject.dto.StudentDto;
 import com.test.testproject.models.Student;
 import com.test.testproject.services.StdudentService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,19 @@ public class WelcomeController {
         return  _stdudentService.GetStudentByName(name);
     }
 
+    @GetMapping("/deletebyidandname/{id}/{name}")
+    public String deleteStudentByIdAndName(@PathVariable int id ,@PathVariable String name)
+    {
+        return  _stdudentService.deleteStudentByIdAndName(id,name);
+    }
+
+
+    @GetMapping("/getstudentsbymarks/{expectedMarks}")
+    public List<Student> getAllStudentGreterthanMarks(@PathVariable int expectedMarks)
+    {
+        return  _stdudentService.getAllStudentGreterthanMarks(expectedMarks);
+    }
+
     @GetMapping("/stdbynamecontain/{name}")
     public Student getStudetBynameContain(@PathVariable String name)
     {
@@ -93,10 +107,18 @@ public class WelcomeController {
 
 
     @PostMapping("/addStudent")
-    public List<Student> addStudent(@RequestBody Student std)
+    public ResponseEntity<?> addStudent(@Valid @RequestBody Student std)
     {
         ///System.out.print("Samik");
-        return  _stdudentService.AddStudent(std);
+        //if(std.stdName != null)
+
+        try {
+            return new  ResponseEntity<>(this._stdudentService.AddStudent(std),HttpStatus.OK);
+        }
+        catch (Exception ex)
+        {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/addAllStudent")

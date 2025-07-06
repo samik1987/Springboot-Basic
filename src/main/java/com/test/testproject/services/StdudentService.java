@@ -10,6 +10,7 @@ import com.test.testproject.utility.IUtility;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -138,6 +139,22 @@ public class StdudentService {
         _stdH2.saveAll(stdList);
 
         return  _stdH2.findAll();
+
+    }
+
+    public List<Student> getAllStudentGreterthanMarks(int expectedMarks)
+    {
+
+        return  _stdH2.findByTotalMarksGreaterThan(expectedMarks).orElse(new ArrayList<>());
+
+    }
+
+    public String deleteStudentByIdAndName(int id ,String name)
+    {
+        if(_stdH2.deleteByIdAndName(id,name) >0 )
+            return "Record Deleted successfully !";
+        else
+            return "Record Delete Failed !";
 
     }
 
