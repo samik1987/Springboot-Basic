@@ -66,11 +66,18 @@ public class WelcomeController {
 
 
     @GetMapping("/studentbyid/{id}")
-    public Student getStudetById(@PathVariable int id ,@RequestParam(defaultValue = "Testname") String name)
-    {
+    public ResponseEntity<?> getStudetById(@PathVariable int id ,@RequestParam(defaultValue = "Testname") String name) {
 
         System.out.println("Student name =" + name);
-        return  _stdudentService.GetStudentById(id);
+
+
+            return new ResponseEntity<>(_stdudentService.GetStudentById(id),HttpStatus.OK);
+
+    }
+
+    @GetMapping("/test-error")
+    public String testError() {
+        throw new RuntimeException("Testing Global Exception Handler");
     }
 
     @GetMapping("/studentbyname/{name}")

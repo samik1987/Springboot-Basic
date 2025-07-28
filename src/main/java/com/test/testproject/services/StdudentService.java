@@ -4,13 +4,9 @@ import com.test.testproject.dto.StudentDto;
 import com.test.testproject.models.Student;
 import com.test.testproject.repository.StudentH2Repo;
 import com.test.testproject.repository.StudentRepository;
-import com.test.testproject.utility.CBSEPassFailUtility;
-import com.test.testproject.utility.ICSEPassFailUtility;
 import com.test.testproject.utility.IUtility;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -61,15 +57,12 @@ public class StdudentService {
 
     }
 
-    public Student GetStudentById(int _stdId)
-    {
+    public Student GetStudentById(int _stdId) {
 
-//        Optional<Student>  sercStd =_studentRepository.Studentdata().stream()
-//                .filter(std -> std.stdId == _stdId).findAny();
-//
-//        return  sercStd.orElse(new Student());
 
-        return _stdH2.findById(_stdId).orElse(new Student());
+        //return _stdH2.findById(_stdId).orElse(new Student());
+
+        return _stdH2.findById(_stdId).get();
 
     }
 
