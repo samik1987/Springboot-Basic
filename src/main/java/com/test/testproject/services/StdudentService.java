@@ -1,6 +1,7 @@
 package com.test.testproject.services;
 
 import com.test.testproject.dto.StudentDto;
+import com.test.testproject.mapper.StudentMapper;
 import com.test.testproject.models.Student;
 import com.test.testproject.repository.StudentH2Repo;
 import com.test.testproject.repository.StudentRepository;
@@ -23,6 +24,9 @@ public class StdudentService {
 
     @Autowired
     public StudentH2Repo _stdH2;
+
+    @Autowired
+    private StudentMapper studentMapper;
 
 //    @Autowired
 //    @Qualifier("CBSE-Utility")
@@ -51,7 +55,7 @@ public class StdudentService {
         Map<String, Long> stdgroup =  stdList.stream()
                 .map(std ->{
                    return new StudentDto(std.stdId,std.stdRoll,std.stdName,std.stdClass,std.totalMarks> 75 ? "pass" : "fail");
-                }).collect(Collectors.groupingBy(st-> st.IsStudentPass, Collectors.counting()));
+                }).collect(Collectors.groupingBy(st-> st.isStudentPass, Collectors.counting()));
 
         return  stdgroup;
 
@@ -63,6 +67,20 @@ public class StdudentService {
         //return _stdH2.findById(_stdId).orElse(new Student());
 
         return _stdH2.findById(_stdId).get();
+
+    }
+
+    public StudentDto GetStudentDtoById(int _stdId) {
+
+        StudentDto stdDto = studentMapper.toDTO(_stdH2.findById(_stdId).get());
+        return stdDto;
+
+    }
+
+    public List<StudentDto> GetAllStudentDto() {
+
+        List<StudentDto> stdDtoList = studentMapper.toDTOList(_stdH2.findAll());
+        return stdDtoList;
 
     }
 
@@ -92,11 +110,11 @@ public class StdudentService {
                 .findAny().get();
 
 
-        stdDto.IsStudentPass = _utilityObj.IsStudentPass(std1.totalMarks);;
+        stdDto.isStudentPass = _utilityObj.IsStudentPass(std1.totalMarks);;
 
 
-        stdDto.stdName = std1.stdName;
-        stdDto.stdClass = std1.stdClass;
+        stdDto.studentName = std1.stdName;
+        stdDto.studentClass = std1.stdClass;
 
         return  stdDto;
     }

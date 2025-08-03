@@ -124,7 +124,7 @@ public class WelcomeController {
         }
         catch (Exception ex)
         {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error occur at addStudent()", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -150,5 +150,28 @@ public class WelcomeController {
     }
 
 
+    @GetMapping("/getstudentdto/{id}")
+    public ResponseEntity<?> getStudentDtoById(@PathVariable int id)
+    {
+        try {
+            return new  ResponseEntity<>(this._stdudentService.GetStudentDtoById(id),HttpStatus.OK);
+        }
+        catch (Exception ex)
+        {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/getallstudentdto")
+    public ResponseEntity<?> getAllStudentDtoById()
+    {
+        try {
+            return new  ResponseEntity<>(this._stdudentService.GetAllStudentDto(),HttpStatus.OK);
+        }
+        catch (Exception ex)
+        {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

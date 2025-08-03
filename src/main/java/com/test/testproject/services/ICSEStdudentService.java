@@ -47,7 +47,7 @@ public class ICSEStdudentService {
         Map<String, Long> stdgroup =  stdList.stream()
                 .map(std ->{
                    return new StudentDto(std.stdId,std.stdRoll,std.stdName,std.stdClass,std.totalMarks> 75 ? "pass" : "fail");
-                }).collect(Collectors.groupingBy(st-> st.IsStudentPass, Collectors.counting()));
+                }).collect(Collectors.groupingBy(st-> st.isStudentPass, Collectors.counting()));
 
         return  stdgroup;
 
@@ -79,11 +79,11 @@ public class ICSEStdudentService {
                 .findAny().get();
 
 
-        stdDto.IsStudentPass = _utilityObj.IsStudentPass(std1.totalMarks);;
+        stdDto.isStudentPass = _utilityObj.IsStudentPass(std1.totalMarks);;
 
 
-        stdDto.stdName = std1.stdName;
-        stdDto.stdClass = std1.stdClass;
+        stdDto.studentName = std1.stdName;
+        stdDto.studentClass = std1.stdClass;
 
         return  stdDto;
     }

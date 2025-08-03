@@ -7,61 +7,61 @@ import jakarta.persistence.Id;
 
 public class StudentDto {
 
-
-    public  int stdId;
-    public  int stdRoll;
-    public  String stdName;
-    public  String stdClass;
-    public  String IsStudentPass;
-
-    public StudentDto(int stdId, int stdRoll, String stdName, String stdClass, String isStudentPass) {
-        this.stdId = stdId;
-        this.stdRoll = stdRoll;
-        this.stdName = stdName;
-        this.stdClass = stdClass;
-        IsStudentPass = isStudentPass;
-    }
-
     public StudentDto() {
     }
 
-    public int getStdId() {
-        return stdId;
+    public StudentDto(int studentId, int studentRoll, String studentName, String studentClass,String isStudentPass) {
+        this.studentId = studentId;
+        this.isStudentPass = isStudentPass;
+        this.studentRoll = studentRoll;
+        this.studentName = studentName;
+        this.studentClass = studentClass;
     }
 
-    public int getStdRoll() {
-        return stdRoll;
+    public  int studentId;
+    public  int studentRoll;
+    public  String studentName;
+    public  String studentClass;
+    public  String isStudentPass;
+
+
+    public int getStudentId() {
+        return studentId;
     }
 
-    public String getStdName() {
-        return stdName;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
-    public String getStdClass() {
-        return stdClass;
+    public int getStudentRoll() {
+        return studentRoll;
+    }
+
+    public void setStudentRoll(int studentRoll) {
+        this.studentRoll = studentRoll;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getStudentClass() {
+        return studentClass;
+    }
+
+    public void setStudentClass(String studentClass) {
+        this.studentClass = studentClass;
     }
 
     public String getIsStudentPass() {
-        return IsStudentPass;
-    }
-
-    public void setStdId(int stdId) {
-        this.stdId = stdId;
-    }
-
-    public void setStdRoll(int stdRoll) {
-        this.stdRoll = stdRoll;
-    }
-
-    public void setStdName(String stdName) {
-        this.stdName = stdName;
-    }
-
-    public void setStdClass(String stdClass) {
-        this.stdClass = stdClass;
+        return isStudentPass;
     }
 
     public void setIsStudentPass(String isStudentPass) {
-        IsStudentPass = isStudentPass;
+        this.isStudentPass = isStudentPass;
     }
 }
